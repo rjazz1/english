@@ -405,7 +405,7 @@ input[type=range]{width:100%;accent-color:var(--violet);min-height:40px}
       </div>
       <div class="backup">
         <span class="lbl">КОПИЯ УРОКОВ</span>
-        <p id="backupNote">Новые уроки и звёзды хранятся на этом устройстве. Сохраните копию, чтобы не потерять их или перенести на другое устройство.</p>
+        <p id="backupNote">Новые уроки и звёзды хранятся на этом устройстве. «Сохранить копию» создаёт файл lessons.json: загрузите его в свой репозиторий на GitHub, и уроки появятся на всех устройствах.</p>
         <div class="row">
           <button type="button" class="btn btn-soft sm" id="exportBtn">Сохранить копию</button>
           <span class="btn btn-ghost sm file-btn">Загрузить копию<input type="file" id="importFile" accept=".json,.txt,application/json,text/plain" aria-label="Загрузить копию"></span>
@@ -452,12 +452,84 @@ var BUILTIN = (function(){
     'r':  ["Английский звук [r]", "Подними кончик языка к нёбу, но не касайся его и не дрожи им. Это не рычащее русское «р» — звук мягкий и тихий."],
     'ʃ':  ["Звук [ʃ] — мягкое «ш»", "Похож на русское «ш», но мягче: губы чуть вытяни вперёд, как будто говоришь «тише-тише»."],
     'ɜː': ["Звук [ɜː]", "Похож на «ё» в слове «мёд», только без «й» в начале. Губы не округляй и тяни звук."],
+    'ŋ':  ["Звук [ŋ] — «нг» через нос", "Прижми спинку языка к нёбу, как для «г», но воздух пусти через нос. Само «г» в конце не говори."],
     'ɒ':  ["Короткий звук [ɒ]", "Короткое «о»: рот открыт, губы чуть округлены. Говори быстро, не тяни."]
   };
   function S(ipa, words){ return { ipa:ipa, name_ru:SND[ipa][0], how_ru:SND[ipa][1], words:words.map(function(x){ return { w:x[0], part:x[1] }; }) }; }
   function LESSON(id, o){ return { id:'b-' + id, builtin:true, topic:o.topic_ru, level:'class', createdAt:0, lesson:o }; }
 
   return [
+    LESSON('pronouns', {
+      topic_en:"I, you, he, she", topic_ru:"Местоимения: я, ты, он, она",
+      greeting_en:"Who is who? Let's learn little helper words!", greeting_ru:"Кто есть кто? Учим маленькие слова-помощники!",
+      words:[
+        W("I", "я", "🙋", "aɪ", "I am nine.", "Мне девять лет."),
+        W("you", "ты, вы", "👉", "juː", "You are my friend.", "Ты мой друг."),
+        W("he", "он", "👦", "hiː", "He is a boy.", "Он мальчик."),
+        W("she", "она", "👧", "ʃiː", "She is a girl.", "Она девочка."),
+        W("it", "оно, это (про предмет или животное)", "🐱", "ɪt", "It is a cat.", "Это кошка."),
+        W("we", "мы", "👫", "wiː", "We are friends.", "Мы друзья."),
+        W("they", "они", "👨‍👩‍👧‍👦", "ðeɪ", "They are happy.", "Они весёлые.")
+      ],
+      sounds:[ S('iː', [["he","e"],["she","e"],["we","e"]]), S('ð', [["they","th"],["this","th"],["the","th"]]) ],
+      phrases:[ P("I am nine.", "Мне девять лет."), P("You are my friend.", "Ты мой друг."), P("He is tall.", "Он высокий."), P("She is kind.", "Она добрая."), P("We are happy.", "Мы весёлые."), P("They are in the park.", "Они в парке.") ],
+      chant:{ en:["He and she,","You and me,","We are friends,","One, two, three!"], ru:["Он и она,","Ты и я,","Мы друзья,","Раз, два, три!"] },
+      tip_ru:"I (я) всегда пишется с большой буквы. После I — am, после he, she, it — is, после you, we, they — are."
+    }),
+
+    LESSON('possessive', {
+      topic_en:"My, your, his, her", topic_ru:"Чей? Мой, твой, его, её",
+      greeting_en:"Whose bag is it? Let's find out!", greeting_ru:"Чей это рюкзак? Давай узнаем!",
+      words:[
+        W("my", "мой, моя", "🙋", "maɪ", "This is my bag.", "Это мой рюкзак."),
+        W("your", "твой, ваш", "👉", "jɔː", "Is this your pen?", "Это твоя ручка?"),
+        W("his", "его", "👦", "hɪz", "His name is Tom.", "Его зовут Том."),
+        W("her", "её", "👧", "hɜː", "Her cat is white.", "Её кошка белая."),
+        W("our", "наш", "👫", "ˈaʊə", "Our house is big.", "Наш дом большой."),
+        W("their", "их", "👨‍👩‍👧‍👦", "ðeə", "Their dog is funny.", "Их собака смешная.")
+      ],
+      sounds:[ S('ɜː', [["her","er"],["bird","ir"],["girl","ir"]]), S('ð', [["their","th"],["this","th"],["that","th"]]) ],
+      phrases:[ P("This is my book.", "Это моя книга."), P("Is this your pen?", "Это твоя ручка?"), P("His bag is blue.", "Его рюкзак синий."), P("Her name is Anna.", "Её зовут Анна."), P("Our cat is grey.", "Наша кошка серая."), P("Their house is big.", "Их дом большой.") ],
+      chant:{ en:["Her bird, her bird","Says a word:","Tweet, tweet, tweet —","Her bird is sweet!"], ru:["Её птичка, её птичка","Говорит словечко:","Чик-чирик —","Её птичка милая!"] },
+      tip_ru:"his — его (про мальчика), her — её (про девочку). Сравни: she — она, her — её. She is my sister. Her cat is white."
+    }),
+
+    LESSON('sentences', {
+      topic_en:"Who does what?", topic_ru:"Строим предложение: кто что делает",
+      greeting_en:"Let's build sentences like a puzzle!", greeting_ru:"Давай собирать предложения, как пазл!",
+      words:[
+        W("play", "играть", "🧸", "pleɪ", "I play with my friends.", "Я играю с друзьями."),
+        W("read", "читать", "📖", "riːd", "I read books.", "Я читаю книги."),
+        W("draw", "рисовать", "🎨", "drɔː", "We draw pictures.", "Мы рисуем картинки."),
+        W("sing", "петь", "🎤", "sɪŋ", "Birds sing.", "Птицы поют."),
+        W("eat", "есть, кушать", "🍽️", "iːt", "Cats eat fish.", "Кошки едят рыбу."),
+        W("drink", "пить", "🥤", "drɪŋk", "I drink milk.", "Я пью молоко."),
+        W("go", "идти, ходить", "🚶", "ɡəʊ", "We go to school.", "Мы ходим в школу."),
+        W("sleep", "спать", "😴", "sliːp", "Babies sleep a lot.", "Малыши много спят.")
+      ],
+      sounds:[ S('ŋ', [["sing","ng"],["song","ng"],["drink","n"]]), S('iː', [["read","ea"],["eat","ea"],["sleep","ee"]]) ],
+      phrases:[ P("I like apples.", "Я люблю яблоки."), P("We go to school.", "Мы ходим в школу."), P("She reads books.", "Она читает книги."), P("They play football.", "Они играют в футбол."), P("My cat drinks milk.", "Моя кошка пьёт молоко."), P("I can sing.", "Я умею петь.") ],
+      chant:{ en:["Sing, sing, sing a song,","Sing it all day long!","Ding-dong, ding-dong,","Sing, sing, sing a song!"], ru:["Пой, пой, пой песенку,","Пой весь день!","Динь-дон, динь-дон,","Пой, пой, пой песенку!"] },
+      tip_ru:"Порядок слов строгий: сначала КТО, потом ЧТО ДЕЛАЕТ, потом ЧТО или ГДЕ: I play football. С he, she, it к глаголу добавляем -s: She reads, he plays."
+    }),
+
+    LESSON('questions', {
+      topic_en:"Questions and no", topic_ru:"Вопросы и отрицания",
+      greeting_en:"Let's ask questions and answer yes or no!", greeting_ru:"Давай задавать вопросы и отвечать «да» или «нет»!",
+      words:[
+        W("what", "что", "❓", "wɒt", "What is it?", "Что это?"),
+        W("who", "кто", "🧑", "huː", "Who is she?", "Кто она?"),
+        W("where", "где", "📍", "weə", "Where is my cat?", "Где моя кошка?"),
+        W("when", "когда", "⏰", "wen", "When is your birthday?", "Когда твой день рождения?"),
+        W("how many", "сколько", "🔢", "haʊ ˈmeni", "How many pens have you got?", "Сколько у тебя ручек?"),
+        W("yes", "да", "✅", "jes", "Yes, I can.", "Да, умею."),
+        W("no", "нет", "❌", "nəʊ", "No, I can't.", "Нет, не умею.")
+      ],
+      sounds:[ S('w', [["what","w"],["where","w"],["when","w"]]), S('h', [["who","h"],["how","h"],["house","h"]]) ],
+      phrases:[ P("Can you swim?", "Ты умеешь плавать?"), P("Is it a cat?", "Это кошка?"), P("Do you like milk?", "Ты любишь молоко?"), P("I don't like milk.", "Я не люблю молоко."), P("She is not my sister.", "Она не моя сестра."), P("Where is my bag?", "Где мой рюкзак?") ],
+      chant:{ en:["What? Where? When?","Count to ten!","What? Where? Who?","I ask you!"], ru:["Что? Где? Когда?","Посчитай до десяти!","Что? Где? Кто?","Я спрашиваю тебя!"] },
+      tip_ru:"Чтобы спросить, ставим is, are, can или do в начало: You can swim → Can you swim? It is a cat → Is it a cat? Отрицание — not: I cannot (can't) swim, I do not (don't) like milk."
+    }),
     LESSON('school', {
       topic_en:"School things", topic_ru:"Школьные вещи",
       greeting_en:"Let's open our school bag!", greeting_ru:"Давай заглянем в школьный рюкзак!",
@@ -780,7 +852,25 @@ var LKEY = 'rb.lessons', BKEY = 'rb.best';
 function userLessons(){ var a = LS.get(LKEY, []); return Array.isArray(a) ? a.filter(function(r){ return r && r.lesson && Array.isArray(r.lesson.words) && r.lesson.words.length; }) : []; }
 function bestOf(id){ return LS.get(BKEY, {})[id] || 0; }
 function setBest(id, n){ var b = LS.get(BKEY, {}); if ((b[id] || 0) < n){ b[id] = n; LS.set(BKEY, b); } }
-function allLessons(){ return userLessons().concat(BUILTIN); }
+var siteLessons = [];
+function allLessons(){
+  var site = {}; siteLessons.forEach(function(r){ site[r.id] = 1; });
+  return userLessons().filter(function(r){ return !site[r.id]; }).concat(siteLessons, BUILTIN);
+}
+function siteRecs(d){
+  var list = Array.isArray(d) ? d : (d && Array.isArray(d.lessons) ? d.lessons : []);
+  return list.map(function(r, n){
+    if (!r) return null;
+    var src = r.lesson && r.lesson.words ? r.lesson : r;
+    var L = normalizeLesson(src, str(r.topic, 160));
+    return L ? { id:String(r.id || ('site-' + n)).slice(0, 40), builtin:true, site:true, topic:str(r.topic, 160) || L.topic_ru, level:'class', createdAt:Number(r.createdAt) || 0, lesson:L } : null;
+  }).filter(Boolean);
+}
+function loadSiteLessons(){
+  if (!/^https?:$/.test(location.protocol) || !window.fetch) return;
+  fetch('lessons.json', { cache:'no-cache' }).then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if (!d) return; siteLessons = siteRecs(d); renderLessons(); }).catch(function(){});
+}
 function findRec(id){ var all = allLessons(); for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i]; return null; }
 function addUserLesson(rec){
   var list = userLessons(); list.unshift(rec);
@@ -814,9 +904,10 @@ function renderNext(){
     '<button type="button" class="btn btn-primary" data-open="' + esc(rec.id) + '">Начать урок</button>';
 }
 function renderLessons(){
-  var all = allLessons(), mine = userLessons().length;
+  var all = allLessons();
   $('#lessonGrid').innerHTML = all.map(function(rec, n){ return lessonCard(rec, n); }).join('');
-  $('#lessonsMeta').textContent = BUILTIN.length + ' готовых' + (mine ? ' и ' + mine + ' ' + plural(mine, 'новый', 'новых', 'новых') : '');
+  var mineShown = all.length - BUILTIN.length;
+  $('#lessonsMeta').textContent = BUILTIN.length + ' готовых' + (mineShown ? ' и ' + mineShown + ' ' + plural(mineShown, 'новый', 'новых', 'новых') : '');
   renderNext();
 }
 function lessonCard(rec, n){
@@ -825,7 +916,7 @@ function lessonCard(rec, n){
     '<div class="lc-pic" aria-hidden="true">' + picHTML(L) + '</div>' +
     '<div><h3 class="lc-en">' + esc(L.topic_en) + '</h3><p class="lc-ru">' + esc(L.topic_ru) + ' · ' + countWords(L) + '</p>' +
     '<div class="lc-meta"><span class="stars" role="img" aria-label="Лучший результат: ' + best + ' из 3">' + starsHTML(best) + '</span>' +
-      (rec.builtin ? '' : '<span class="badge">новый · ' + esc(fmtDate(rec.createdAt)) + '</span>') + '</div></div>' +
+      (rec.site ? '<span class="badge">с GitHub</span>' : rec.builtin ? '' : '<span class="badge">новый · ' + esc(fmtDate(rec.createdAt)) + '</span>') + '</div></div>' +
     '<div class="lc-actions">' +
       '<button type="button" class="btn btn-primary sm" data-open="' + esc(rec.id) + '">Начать</button>' +
       (rec.builtin ? '' : '<button type="button" class="icon-btn" data-del="' + esc(rec.id) + '" aria-label="Удалить урок">' + ICON.trash + '</button>') +
@@ -951,7 +1042,7 @@ function normalizeLesson(d, topic){
     return { ipa:str(s.ipa, 8).replace(/[\/\[\]]/g, ''), name_ru:str(s.name_ru, 60), how_ru:str(s.how_ru, 320), words:ws };
   }).filter(function(s){ return s.ipa && s.words.length; }).slice(0, 2);
   var phrases = (Array.isArray(d.phrases) ? d.phrases : []).map(function(p){ p = p || {}; return { en:str(p.en, 90), ru:str(p.ru, 120) }; })
-    .filter(function(p){ return p.en && p.ru; }).slice(0, 5);
+    .filter(function(p){ return p.en && p.ru; }).slice(0, 6);
   var ch = d.chant && typeof d.chant === 'object' ? d.chant : {};
   var chant = {
     en:(Array.isArray(ch.en) ? ch.en : []).map(function(x){ return str(x, 60); }).filter(Boolean).slice(0, 4),
@@ -1032,7 +1123,7 @@ $('#importFile').addEventListener('change', function(){
 });
 $('#exportBtn').addEventListener('click', function(){
   var data = JSON.stringify({ app:'unicorn-english', version:1, savedAt:new Date().toISOString(), lessons:userLessons(), best:LS.get(BKEY, {}) });
-  var name = 'unicorn-english-copy.json';
+  var name = 'lessons.json';
   try {
     var file = new File([data], name, { type:'application/json' });
     if (navigator.canShare && navigator.canShare({ files:[file] })){
@@ -1077,7 +1168,7 @@ function openLesson(rec){
   if (lesson.words.length >= 3) order.push('quiz');
   var spellWords = shuffle(lesson.words.filter(function(w){ return /^[a-z]{3,10}$/i.test(w.en); })).slice(0, 5);
   if (spellWords.length) order.push('spell');
-  var phrases = lesson.phrases.filter(function(p){ var n = p.en.split(/\s+/).length; return n >= 2 && n <= 9; }).slice(0, 4);
+  var phrases = lesson.phrases.filter(function(p){ var n = p.en.split(/\s+/).length; return n >= 2 && n <= 9; }).slice(0, 6);
   if (phrases.length) order.push('phrase');
   order.push('finish');
   L = { rec:rec, lesson:lesson, order:order, idx:0, done:{}, spellWords:spellWords, phrases:phrases, results:{}, soundRating:0, wordI:0, saved:false };
@@ -1468,6 +1559,7 @@ renderGreeting();
 $('#quickTopics').innerHTML = QUICK.map(function(t){ return '<button type="button" class="chip" data-topic="' + esc(t) + '">' + esc(t) + '</button>'; }).join('');
 renderSettings();
 renderLessons();
+loadSiteLessons();
 if (tts.ok) tts.load();
 if ('serviceWorker' in navigator && location.protocol === 'https:'){
   window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
